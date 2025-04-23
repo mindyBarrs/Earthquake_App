@@ -35,6 +35,10 @@ This dataset includes information about all recorded earthquakes in the last 30 
 - Tailwind CSS: Used to setup theaming for the application and the base of some custom components.
 - Redux & Redux Toolkit Query: Used for state managment and gettting the CSV from the provided URL
 
+### Color Pallette
+
+[Color Pallete](https://coolors.co/palette/f0ead2-dde5b6-adc178-a98467-6c584c) used to style the application.
+
 ## Requirements
 
 ### Application Layout

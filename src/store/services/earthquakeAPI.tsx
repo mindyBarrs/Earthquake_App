@@ -2,6 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import Papa from "papaparse";
 
+import { earthquakeAPITypes } from "lib/types/earthquake.types";
+
 const EARTHQUAKEURL =
 	"https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv";
 
@@ -9,9 +11,9 @@ export const earthquakeApi = createApi({
 	reducerPath: "earthquakeAPI",
 	baseQuery: fetchBaseQuery({ baseUrl: EARTHQUAKEURL }),
 	endpoints: (builder) => ({
-		getEarthquakeData: builder.query<any[], void>({
+		getEarthquakeData: builder.query<earthquakeAPITypes, void>({
 			async queryFn(): Promise<
-				{ data: any[] } | { error: FetchBaseQueryError }
+				{ data: earthquakeAPITypes } | { error: FetchBaseQueryError }
 			> {
 				try {
 					const res = await fetch(EARTHQUAKEURL);
@@ -32,7 +34,12 @@ export const earthquakeApi = createApi({
 						};
 					}
 
-					return { data: parsed.data as any[] };
+					return {
+						data: {
+							data: parsed.data as any[],
+							headers: parsed.meta.fields as string[],
+						},
+					};
 				} catch (err: any) {
 					return {
 						error: {

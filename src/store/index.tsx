@@ -1,15 +1,19 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
 // REDUCERS
+import chartReducer from "./reducer/chartReducer";
 
 // SERVICES
 import earthquakeApi from "./services/earthquakeAPI";
 
+export const rootReducer = combineReducers({
+	chart: chartReducer,
+	[earthquakeApi.reducerPath]: earthquakeApi.reducer,
+});
+
 export const store = configureStore({
-	reducer: {
-		[earthquakeApi.reducerPath]: earthquakeApi.reducer,
-	},
+	reducer: rootReducer,
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat(earthquakeApi.middleware),
 });
