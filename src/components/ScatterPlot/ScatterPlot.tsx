@@ -18,16 +18,14 @@ export const ScatterPlot: React.FC<ScatterPlotTypes> = ({ chartData }) => {
 	return (
 		<>
 			{chart.xAxis && chart.yAxis && (
-				<div className="">
-					<ResponsiveContainer width="100%" height={400}>
-						<ScatterChart margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
-							<XAxis dataKey={chart.xAxis} name={chart.xAxis} type="number" />
-							<YAxis dataKey={chart.yAxis} name={chart.yAxis} type="number" />
-							<Tooltip cursor={{ strokeDasharray: "3 3" }} />
-							<Scatter name="Earthquakes" data={chartData} fill="#3182ce" />
-						</ScatterChart>
-					</ResponsiveContainer>
-				</div>
+				<ResponsiveContainer width="100%" height={400}>
+					<ScatterChart margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
+						<XAxis dataKey={chart.xAxis} name={chart.xAxis} type="number" />
+						<YAxis dataKey={chart.yAxis} name={chart.yAxis} type="number" />
+						<Tooltip cursor={{ strokeDasharray: "3 3" }} />
+						<Scatter name="Earthquakes" data={chartData} fill="#3182ce" />
+					</ScatterChart>
+				</ResponsiveContainer>
 			)}
 		</>
 	);
