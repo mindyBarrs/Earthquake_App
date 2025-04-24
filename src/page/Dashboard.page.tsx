@@ -15,7 +15,7 @@ export const Dashboard = () => {
 
 	useEffect(() => {
 		if (data) {
-			dispatch(setAxixsFieldOptions(data?.headers));
+			dispatch(setAxixsFieldOptions(data?.filterOptions));
 		}
 	}, [data]);
 
@@ -25,7 +25,9 @@ export const Dashboard = () => {
 
 			<ScatterPlot chartData={data?.data ?? []} />
 
-			{!isLoading && !error && <DataTable data={data?.data ?? []} />}
+			{!isLoading && !error && (
+				<DataTable data={data?.data ?? []} headers={data?.headers ?? []} />
+			)}
 
 			{error && <div>{error.data}</div>}
 		</>

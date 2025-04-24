@@ -52,10 +52,18 @@ export const earthquakeApi = createApi({
 						return normalizedEntry;
 					});
 
+					const sample = transformedData.slice(0, 10);
+					const headers = parsed.meta.fields || [];
+
+					const numericFields = headers.filter((field) =>
+						sample.every((row) => typeof row[field] === "number")
+					);
+
 					return {
 						data: {
 							data: transformedData,
-							headers: parsed.meta.fields || [],
+							headers: headers,
+							filterOptions: numericFields,
 						},
 					};
 				} catch (err) {

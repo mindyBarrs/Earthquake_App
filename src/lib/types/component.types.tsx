@@ -6,8 +6,9 @@ export interface ScatterPlotTypes {
 
 export interface DataTableTypes {
 	data: any[];
+	headers: string[];
 }
 
 export interface DashboardTypes {
-	data?: earthquakeAPITypes | undefined;
+	data?: earthquakeAPITypes;
 }
