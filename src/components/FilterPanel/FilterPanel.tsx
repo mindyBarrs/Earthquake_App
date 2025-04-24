@@ -18,7 +18,7 @@ export const FilterPanel = () => {
 	}, []);
 
 	return (
-		<div className="w-50">
+		<div className="">
 			<h2 className="text-xl font-semibold mb-4">Earthquake Plot</h2>
 
 			<div className="flex space-x-4 mb-4">

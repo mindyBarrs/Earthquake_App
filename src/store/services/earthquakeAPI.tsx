@@ -4,48 +4,66 @@ import Papa from "papaparse";
 
 import { earthquakeAPITypes } from "lib/types/earthquake.types";
 
-const EARTHQUAKEURL =
+const EARTHQUAKE_URL =
 	"https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv";
 
 export const earthquakeApi = createApi({
 	reducerPath: "earthquakeAPI",
-	baseQuery: fetchBaseQuery({ baseUrl: EARTHQUAKEURL }),
+	baseQuery: fetchBaseQuery({ baseUrl: "/" }), // base URL not used here
 	endpoints: (builder) => ({
 		getEarthquakeData: builder.query<earthquakeAPITypes, void>({
 			async queryFn(): Promise<
 				{ data: earthquakeAPITypes } | { error: FetchBaseQueryError }
 			> {
 				try {
-					const res = await fetch(EARTHQUAKEURL);
-					const text = await res.text();
+					const response = await fetch(EARTHQUAKE_URL);
+					const csvText = await response.text();
 
-					const parsed = Papa.parse(text, {
+					const parsed = Papa.parse<Record<string, unknown>>(csvText, {
 						header: true,
 						dynamicTyping: true,
 						skipEmptyLines: true,
 					});
 
-					if (parsed.errors.length) {
+					if (parsed.errors.length > 0) {
 						return {
 							error: {
 								status: 500,
-								data: parsed.errors,
-							},
+								data: JSON.stringify(parsed.errors),
+							} as FetchBaseQueryError,
 						};
 					}
 
+					const transformedData = parsed.data.map((entry) => {
+						const normalizedEntry = { ...entry };
+
+						const normalizeDate = (value: unknown) => {
+							const str = String(value);
+							const parsedDate = new Date(str);
+							return !isNaN(parsedDate.getTime())
+								? parsedDate.toISOString()
+								: str;
+						};
+
+						if (entry.time) normalizedEntry.time = normalizeDate(entry.time);
+						if (entry.updated)
+							normalizedEntry.updated = normalizeDate(entry.updated);
+
+						return normalizedEntry;
+					});
+
 					return {
 						data: {
-							data: parsed.data as any[],
-							headers: parsed.meta.fields as string[],
+							data: transformedData,
+							headers: parsed.meta.fields || [],
 						},
 					};
-				} catch (err: any) {
+				} catch (err) {
 					return {
 						error: {
 							status: "FETCH_ERROR",
-							error: err.message || "Unknown error",
-						},
+							data: JSON.stringify((err as Error).message) || "Unknown error",
+						} as unknown as FetchBaseQueryError,
 					};
 				}
 			},
@@ -53,8 +71,5 @@ export const earthquakeApi = createApi({
 	}),
 });
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
 export const { useGetEarthquakeDataQuery } = earthquakeApi;
-
 export default earthquakeApi;

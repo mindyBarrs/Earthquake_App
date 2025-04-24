@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { DataTableTypes } from "lib/types/component.types";
 
 import { RootState } from "store";
+import { ro } from "date-fns/locale";
 
 export const DataTable: React.FC<DataTableTypes> = ({ data }) => {
 	const chart = useSelector((state: RootState) => state.chart);
@@ -12,29 +13,36 @@ export const DataTable: React.FC<DataTableTypes> = ({ data }) => {
 		<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 			<table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
 				<thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-					{chart?.axisFieldOptions.map((header, index) => {
-						return (
-							<tr key={index + 1}>
-								<th scope="col" className="p-4">
+					<tr>
+						{chart?.axisFieldOptions.map((header, index) => {
+							return (
+								<th key={index + 1} scope="col" className="p-4">
 									{header}
 								</th>
-							</tr>
-						);
-					})}
+							);
+						})}
+					</tr>
 				</thead>
 				<tbody>
-					{data.map((row, index) => (
+					{data.slice(0, 100).map((row) => (
 						<tr
-							key={index + 1}
+							key={row.id}
+							id={row.id}
 							className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
 						>
 							{chart?.axisFieldOptions.map((header) => (
 								<td key={header} className="border px-2 py-1 whitespace-nowrap">
 									{(() => {
 										const value = row[header];
-										if (header === "time" && value) {
-											return format(new Date(value), "yyyy-MM-dd HH:mm:ss");
-										} else if (typeof value === "number") {
+										if (
+											header === "time" ||
+											(header === "updated" && typeof row[header] === "string")
+										)
+											return format(
+												new Date(row[header]),
+												"yyyy-MM-dd HH:mm:ss"
+											);
+										else if (typeof value === "number") {
 											return value.toFixed(2);
 										} else if (value !== undefined && value !== null) {
 											return String(value);

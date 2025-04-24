@@ -4,11 +4,12 @@
 :root {
 	font-family: var(--font-poppins);
 	background-color: var(--color-beige-500);
+	width: 90%;
 }
 
 body {
 	display: flex;
 	flex-direction: column;
 	place-items: center;
-	margin: 0;
+	margin: auto;
 }
