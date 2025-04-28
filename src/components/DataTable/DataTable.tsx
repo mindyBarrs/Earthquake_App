@@ -1,10 +1,10 @@
 import { format } from "date-fns";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { DataTableTypes } from "lib/types/component.types";
-import { PAGE_SIZE } from "lib/constants";
 
 import { RootState } from "store";
+import { setHoveredPoint } from "store/reducer/chartReducer";
 
 export const DataTable: React.FC<DataTableTypes> = ({
 	data,
@@ -14,8 +14,12 @@ export const DataTable: React.FC<DataTableTypes> = ({
 	nextPage,
 	prevPage,
 }) => {
+	const dispatch = useDispatch();
 	const { hoveredPoint } = useSelector((State: RootState) => State.chart);
 
+	const handleMouseOver = (id: string) => {
+		dispatch(setHoveredPoint(id));
+	};
 	return (
 		<>
 			<div className="w-[95%] relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -37,6 +41,7 @@ export const DataTable: React.FC<DataTableTypes> = ({
 							<tr
 								key={row.id}
 								id={String(row.id)}
+								onMouseOver={() => handleMouseOver(String(row.id))}
 								className={`border-b dark:border-gray-700 border-gray-200 
 							hover:bg-green-200 hover:text-black ${
 								hoveredPoint && row.id === hoveredPoint

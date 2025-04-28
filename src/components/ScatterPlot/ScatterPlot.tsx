@@ -38,6 +38,18 @@ export const ScatterPlot: React.FC<ScatterPlotTypes> = ({ chartData }) => {
 							data={chartData}
 							fill="#3182ce"
 							onMouseOver={(state) => handleMouseOver(state)}
+							shape={(props: any) => {
+								const isHovered =
+									chart.hoveredPoint === String(props.payload.id);
+								return (
+									<circle
+										cx={props.cx}
+										cy={props.cy}
+										r={isHovered ? 6 : 3}
+										fill={isHovered ? "red" : "#3182ce"}
+									/>
+								);
+							}}
 						/>
 					</ScatterChart>
 				</ResponsiveContainer>
