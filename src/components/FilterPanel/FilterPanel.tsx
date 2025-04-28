@@ -27,8 +27,9 @@ export const FilterPanel = () => {
 					<select
 						className="ml-2 border rounded px-2 py-1"
 						onChange={(e) => handleOnChangeXAxis(e.target.value)}
+						defaultValue="Select a X Axis:"
 					>
-						<option selected>Select a X axis:</option>
+						<option value="Select a X Axis:">Select a X axis:</option>
 						{chart?.axisFieldOptions.map((field: string) => (
 							<option key={field} value={field}>
 								{field}
@@ -41,8 +42,9 @@ export const FilterPanel = () => {
 					<select
 						className="ml-2 border rounded px-2 py-1"
 						onChange={(e) => handleOnChangeYAxis(e.target.value)}
+						defaultValue="Select a Y axis:"
 					>
-						<option selected>Select a Y axis:</option>
+						<option value="Select a Y axis:">Select a Y axis:</option>
 						{chart?.axisFieldOptions.map((field: string) => (
 							<option key={field} value={field}>
 								{field}

@@ -1,14 +1,18 @@
-import { earthquakeAPITypes } from "lib/types/earthquake.types";
+import { earthquakeRow } from "lib/types/earthquake.types";
 
 export interface ScatterPlotTypes {
-	chartData: any[];
+	chartData: earthquakeRow[];
 }
 
 export interface DataTableTypes {
-	data: any[];
+	data: earthquakeRow[];
 	headers: string[];
+	currentPage: number;
+	totalPages: number;
+	nextPage: () => void;
+	prevPage: () => void;
 }
 
 export interface DashboardTypes {
-	data?: earthquakeAPITypes;
+	data?: earthquakeRow[];
 }

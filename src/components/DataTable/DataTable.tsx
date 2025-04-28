@@ -1,77 +1,94 @@
 import { format } from "date-fns";
+import { useSelector } from "react-redux";
 
 import { DataTableTypes } from "lib/types/component.types";
+import { PAGE_SIZE } from "lib/constants";
 
-export const DataTable: React.FC<DataTableTypes> = ({ data, headers }) => {
+import { RootState } from "store";
+
+export const DataTable: React.FC<DataTableTypes> = ({
+	data,
+	headers,
+	currentPage,
+	totalPages,
+	nextPage,
+	prevPage,
+}) => {
+	const { hoveredPoint } = useSelector((State: RootState) => State.chart);
+
 	return (
-		<div className="w-[95%] relative overflow-x-auto shadow-md sm:rounded-lg">
-			<table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-				<thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-					<tr>
-						{headers.map((header, index) => {
-							return (
-								<th key={index + 1} scope="col" className="p-4">
-									{header}
-								</th>
-							);
-						})}
-					</tr>
-				</thead>
-
-				<tbody>
-					{data.slice(0, 100).map((row) => (
-						<tr
-							key={row.id}
-							id={row.id}
-							className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
-						>
-							{headers.map((header) => (
-								<td key={header} className="border px-2 py-1 whitespace-nowrap">
-									{(() => {
-										const value = row[header];
-										if (
-											header === "time" ||
-											(header === "updated" && typeof row[header] === "string")
-										)
-											return format(
-												new Date(row[header]),
-												"yyyy-MM-dd HH:mm:ss"
-											);
-										else if (typeof value === "number") {
-											return value.toFixed(2);
-										} else if (value !== undefined && value !== null) {
-											return String(value);
-										} else {
-											return "—";
-										}
-									})()}
-								</td>
-							))}
+		<>
+			<div className="w-[95%] relative overflow-x-auto shadow-md sm:rounded-lg">
+				<table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+					<thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-brown-650 dark:text-gray-400">
+						<tr>
+							{headers.map((header, index) => {
+								return (
+									<th key={index + 1} scope="col" className="p-4">
+										{header}
+									</th>
+								);
+							})}
 						</tr>
-					))}
-				</tbody>
-			</table>
+					</thead>
 
-			<nav
-				className="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4"
-				aria-label="Table navigation"
-			>
-				<span className="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
-					Showing{" "}
-					<span className="font-semibold text-gray-900 dark:text-white">
-						1-10
-					</span>{" "}
-					of{" "}
-					<span className="font-semibold text-gray-900 dark:text-white">
-						1000
-					</span>
+					<tbody>
+						{data.map((row) => (
+							<tr
+								key={row.id}
+								id={String(row.id)}
+								className={`border-b dark:border-gray-700 border-gray-200 
+							hover:bg-green-200 hover:text-black ${
+								hoveredPoint && row.id === hoveredPoint
+									? "bg-green-200 text-black"
+									: "bg-brown-650"
+							}`}
+							>
+								{headers.map((header) => (
+									<td
+										key={header}
+										className="border px-2 py-1 whitespace-nowrap"
+									>
+										{header === "time" &&
+										row[header] !== undefined &&
+										typeof row[header] === "string" &&
+										!isNaN(new Date(row[header]!).getTime())
+											? format(new Date(row[header]!), "yyyy-MM-dd HH:mm:ss")
+											: typeof row[header] === "number"
+											? row[header].toFixed(2)
+											: row[header] !== undefined
+											? String(row[header])
+											: "—"}
+									</td>
+								))}
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+
+			<div className="flex justify-between items-center mt-4">
+				<button
+					onClick={prevPage}
+					className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+					disabled={currentPage === 1}
+				>
+					Previous
+				</button>
+
+				<span>
+					Page {currentPage} of {totalPages}
 				</span>
 
-				<ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-					<li>pagination</li>
-				</ul>
-			</nav>
-		</div>
+				<button
+					onClick={nextPage}
+					className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+					disabled={currentPage === totalPages}
+				>
+					Next
+				</button>
+			</div>
+		</>
 	);
 };
 

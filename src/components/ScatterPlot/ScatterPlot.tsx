@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import {
 	ScatterChart,
 	Scatter,
@@ -6,14 +7,23 @@ import {
 	Tooltip,
 	ResponsiveContainer,
 } from "recharts";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { ScatterPlotTypes } from "lib/types/component.types";
 
 import { RootState } from "store";
+import { setHoveredPoint } from "store/reducer/chartReducer";
 
 export const ScatterPlot: React.FC<ScatterPlotTypes> = ({ chartData }) => {
+	const dispatch = useDispatch();
+
 	const chart = useSelector((state: RootState) => state.chart);
+
+	const handleMouseOver = (point: any) => {
+		const safePoint = { ...point };
+
+		dispatch(setHoveredPoint(safePoint?.id));
+	};
 
 	return (
 		<>
@@ -23,7 +33,12 @@ export const ScatterPlot: React.FC<ScatterPlotTypes> = ({ chartData }) => {
 						<XAxis dataKey={chart.xAxis} name={chart.xAxis} type="number" />
 						<YAxis dataKey={chart.yAxis} name={chart.yAxis} type="number" />
 						<Tooltip cursor={{ strokeDasharray: "3 3" }} />
-						<Scatter name="Earthquakes" data={chartData} fill="#3182ce" />
+						<Scatter
+							name="Earthquakes"
+							data={chartData}
+							fill="#3182ce"
+							onMouseOver={(state) => handleMouseOver(state)}
+						/>
 					</ScatterChart>
 				</ResponsiveContainer>
 			)}
