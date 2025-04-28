@@ -33,6 +33,10 @@ export const Dashboard = () => {
 
 	return (
 		<>
+			<h1 className="text-brown-650 text-xl font-semibold mb-4">
+				Earthquake Data
+			</h1>
+
 			<FilterPanel />
 
 			<ScatterPlot chartData={currentData ?? []} />

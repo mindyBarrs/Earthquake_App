@@ -29,7 +29,10 @@ export const ScatterPlot: React.FC<ScatterPlotTypes> = ({ chartData }) => {
 		<>
 			{chart.xAxis && chart.yAxis && (
 				<ResponsiveContainer width="100%" height={400}>
-					<ScatterChart margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
+					<ScatterChart
+						margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
+						title={`Scatter plot of ${chart.xAxis} vs ${chart.yAxis}`}
+					>
 						<XAxis dataKey={chart.xAxis} name={chart.xAxis} type="number" />
 						<YAxis dataKey={chart.yAxis} name={chart.yAxis} type="number" />
 						<Tooltip cursor={{ strokeDasharray: "3 3" }} />
@@ -41,13 +44,20 @@ export const ScatterPlot: React.FC<ScatterPlotTypes> = ({ chartData }) => {
 							shape={(props: any) => {
 								const isHovered =
 									chart.hoveredPoint === String(props.payload.id);
+								const titleText = `${props.payload[chart.xAxis]}, ${
+									props.payload[chart.yAxis]
+								}`;
+
 								return (
-									<circle
-										cx={props.cx}
-										cy={props.cy}
-										r={isHovered ? 6 : 3}
-										fill={isHovered ? "red" : "#3182ce"}
-									/>
+									<>
+										<title>{titleText}</title>
+										<circle
+											cx={props.cx}
+											cy={props.cy}
+											r={isHovered ? 6 : 3}
+											fill={isHovered ? "red" : "#3182ce"}
+										/>
+									</>
 								);
 							}}
 						/>

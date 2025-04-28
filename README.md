@@ -23,7 +23,7 @@ Feel free to skip the suggestions below, use your favorite project initializatio
 ### Data Source
 
 We recommend the USGS Earthquake Data from here:
-https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv
+<https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv>
 
 This dataset includes information about all recorded earthquakes in the last 30 days (latitude, longitude, magnitude, place, time, etc.). Feel free to filter or extend the dataset as needed for your visualization.
 

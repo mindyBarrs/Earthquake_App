@@ -22,9 +22,12 @@ export const DataTable: React.FC<DataTableTypes> = ({
 	};
 	return (
 		<>
-			<div className="w-[95%] relative overflow-x-auto shadow-md sm:rounded-lg">
-				<table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-					<thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-brown-650 dark:text-gray-400">
+			<div
+				tabIndex={0}
+				className="w-[95%] relative overflow-x-auto shadow-md sm:rounded-lg"
+			>
+				<table className="w-full text-sm text-left rtl:text-right text-white dark:text-white">
+					<thead className="text-xs text-white uppercase bg-gray-50 dark:bg-brown-650 dark:text-white">
 						<tr>
 							{headers.map((header, index) => {
 								return (
@@ -72,10 +75,12 @@ export const DataTable: React.FC<DataTableTypes> = ({
 				</table>
 			</div>
 
-			<div className="flex justify-between items-center mt-4">
+			<div className="w-[95%] flex justify-between items-center mt-4">
 				<button
+					type="button"
 					onClick={prevPage}
-					className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+					className="text-black bg-green-200 hover:bg-green-500 focus:ring-4
+					 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
 					disabled={currentPage === 1}
 				>
 					Previous
@@ -87,7 +92,8 @@ export const DataTable: React.FC<DataTableTypes> = ({
 
 				<button
 					onClick={nextPage}
-					className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+					className="text-black bg-green-200 hover:bg-green-500 focus:ring-4
+					 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
 					disabled={currentPage === totalPages}
 				>
 					Next
