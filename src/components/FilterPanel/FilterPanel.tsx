@@ -9,13 +9,19 @@ export const FilterPanel = () => {
 	const dispatch = useDispatch();
 	const chart = useSelector((state: RootState) => state.chart);
 
-	const handleOnChangeXAxis = useCallback((value: string) => {
-		dispatch(setXAxis(value));
-	}, []);
+	const handleOnChangeXAxis = useCallback(
+		(value: string) => {
+			dispatch(setXAxis(value));
+		},
+		[dispatch]
+	);
 
-	const handleOnChangeYAxis = useCallback((value: string) => {
-		dispatch(setYAxis(value));
-	}, []);
+	const handleOnChangeYAxis = useCallback(
+		(value: string) => {
+			dispatch(setYAxis(value));
+		},
+		[dispatch]
+	);
 
 	return (
 		<div className="w-[95%] flex justify-center">

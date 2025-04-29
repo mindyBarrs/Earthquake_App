@@ -26,7 +26,7 @@ export const Dashboard = () => {
 			dispatch(setAxixsFieldOptions(data?.filterOptions));
 			setAllData(data?.data);
 		}
-	}, [data]);
+	}, [data, dispatch]);
 
 	const { currentPage, totalPages, currentData, nextPage, prevPage } =
 		usePagination(allData, PAGE_SIZE);

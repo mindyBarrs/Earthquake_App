@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"baseUrl": "./src",
+		"baseUrl": "src",
 		"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 		"target": "ES2020",
 		"useDefineForClassFields": true,
@@ -29,7 +29,9 @@
 			"@lib/*": ["lib/"],
 			"@utils/*": ["utils/*"],
 			"@pages/*": ["pages/*"]
+			// "@store/*": ["store/*"],
+			// "@hooks/*": ["hooks/*"]
 		}
 	},
-	"include": ["src"]
+	"include": ["./src", "vite.config.ts"]
 }

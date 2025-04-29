@@ -30,9 +30,6 @@ export const chartReducer = createSlice({
 		setHoveredPoint(state, action: PayloadAction<string>) {
 			state.hoveredPoint = action.payload;
 		},
-		clearAxis: (state) => {
-			state = initialState;
-		},
 	},
 });
 
