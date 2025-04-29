@@ -12,13 +12,19 @@ Feel free to skip the suggestions below, use your favorite project initializatio
 
 ### Project Setup
 
-1. Setting up the App:
+1. Clone Repo
 
-   - Use Vite with React and TypeScript to scaffold your new project, e.g., with `npm create vite@latest`
-   - Initialize a Git repository in your project folder.
+```js
+	git clone https://github.com/mindyBarrs/Earthquake_App.git
+```
 
-2. Styling:
-   - Any styling can be used, but Tailwind is recommended!
+2. Running Application:
+
+```js
+   npm i
+
+   npm run dev
+```
 
 ### Data Source
 
@@ -47,13 +53,14 @@ Your application should have a two-pane responsive layout targeting a laptop/des
 
 1. Plotting Pane:
 
-   - Render an interactive plot (e.g., a scatter plot) where each point represents one row in the table.
-   - Allow the variable plotted on each axis to vary based on a user choice, e.g., in a dropdown or similar, limit options to the number-typed fields in the dataset
+- Render an interactive plot (e.g., a scatter plot) where each point represents one row in the table.
+- Allow the variable plotted on each axis to vary based on a user choice, e.g., in a dropdown or similar, limit options to the number-typed fields in the dataset
 
 2. Tabular Pane:
-   - Render the header of the dataset in the top row stickied to the top of the table.
-   - Render the loaded data in a table that can scroll to all columns and rows of the dataset.
-   - Apply any formatting that makes sense for each column (e.g., date formatting, etc.).
+
+- Render the header of the dataset in the top row stickied to the top of the table.
+- Render the loaded data in a table that can scroll to all columns and rows of the dataset.
+- Apply any formatting that makes sense for each column (e.g., date formatting, etc.).
 
 ### Data Loading and Processing
 
