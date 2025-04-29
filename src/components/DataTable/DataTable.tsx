@@ -25,10 +25,10 @@ export const DataTable: React.FC<DataTableTypes> = ({
 		<>
 			<div
 				tabIndex={0}
-				className="w-[95%] relative overflow-x-auto shadow-md sm:rounded-lg"
+				className="w-[95%] relative overflow-x-auto shadow-md sm:rounded-lg max-h-150"
 			>
 				<table className="w-full text-sm text-left rtl:text-right text-white dark:text-white">
-					<thead className="text-xs text-white uppercase bg-gray-50 dark:bg-brown-650 dark:text-white">
+					<thead className="text-xs text-white uppercase bg-gray-50 dark:bg-brown-650 dark:text-white sticky top-0">
 						<tr>
 							{headers.map((header, index) => {
 								return (

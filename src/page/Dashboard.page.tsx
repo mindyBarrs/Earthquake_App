@@ -33,7 +33,7 @@ export const Dashboard = () => {
 
 	return (
 		<>
-			<h1 className="text-brown-650 text-xl font-semibold mb-4">
+			<h1 className="text-brown-650 text-[45px]  font-semibold mb-4">
 				Earthquake Data
 			</h1>
 
