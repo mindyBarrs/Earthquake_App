@@ -10,13 +10,7 @@ Feel free to skip the suggestions below, use your favorite project initializatio
 
 ### Project Setup
 
-1. Clone Repo
-
-```js
-	git clone https://github.com/mindyBarrs/Earthquake_App.git
-```
-
-2. Running Application:
+Running Application:
 
 ```js
    npm i
